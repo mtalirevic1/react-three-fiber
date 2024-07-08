@@ -1,27 +1,27 @@
-import {useFrame} from "@react-three/fiber";
-import {useRef} from "react";
-import {Mesh} from "three"
+import {OrbitControls} from '@react-three/drei'
+import Lights from './Lights.jsx'
 
-const Experience = () => {
-    const boxMeshRef = useRef<Mesh>(null);
-    useFrame((_state, delta) => {
-            boxMeshRef.current!.rotation.y += delta
-    })
-    return (
-        <>
-            <mesh
-                ref={boxMeshRef}
-                scale={1.5}
-                rotation={[0, 1, 0]}
-            >
-                <boxGeometry/>
-                <meshBasicMaterial
-                    color='mediumpurple'
-                    wireframe={false}
-                />
-            </mesh>
-        </>
-    )
+export default function Experience() {
+    return <>
+
+        <OrbitControls makeDefault/>
+
+        <Lights/>
+
+        <mesh castShadow position-x={-2}>
+            <sphereGeometry/>
+            <meshStandardMaterial color="orange"/>
+        </mesh>
+
+        <mesh castShadow position-x={2} scale={1.5}>
+            <boxGeometry/>
+            <meshStandardMaterial color="mediumpurple"/>
+        </mesh>
+
+        <mesh receiveShadow position-y={-1} rotation-x={-Math.PI * 0.5} scale={10}>
+            <planeGeometry/>
+            <meshStandardMaterial color="greenyellow"/>
+        </mesh>
+
+    </>
 }
-
-export default Experience
