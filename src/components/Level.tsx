@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import {CuboidCollider, RapierRigidBody, RigidBody} from "@react-three/rapier"
 import {ComponentType, useMemo, useRef, useState} from "react";
 import {useFrame} from "@react-three/fiber";
-import {useGLTF} from "@react-three/drei";
+import {Float, Text, useGLTF} from "@react-three/drei";
 
 const boxGeometry: THREE.BoxGeometry = new THREE.BoxGeometry(1, 1, 1)
 const floor1Material = new THREE.MeshStandardMaterial({color: 'limegreen'})
@@ -13,6 +13,20 @@ const wallMaterial = new THREE.MeshStandardMaterial({color: 'slategrey'})
 export const BlockStart = ({position = [0, 0, 0]}: { position?: [number, number, number] }) => {
     return (
         <group position={position}>
+            <Float floatIntensity={0.25} rotationIntensity={0.25}>
+                <Text
+                    font='./bebas-neue-v9-latin-regular.woff'
+                    scale={0.5}
+                    maxWidth={0.25}
+                    lineHeight={0.75}
+                    textAlign="right"
+                    position={[0.75, 0.65, 0]}
+                    rotation-y={-0.25}
+                >
+                   Marble Race
+                    <meshBasicMaterial toneMapped={false} />
+                </Text>
+            </Float>
             <mesh
                 geometry={boxGeometry}
                 material={floor1Material}
@@ -33,6 +47,14 @@ const BlockEnd = ({position = [0, 0, 0]}: { position?: [number, number, number] 
 
     return (
         <group position={position}>
+            <Text
+                font='./bebas-neue-v9-latin-regular.woff'
+                scale={1}
+                position={[0, 2.25, 2]}
+            >
+                FINISH
+                <meshBasicMaterial toneMapped={false}/>
+            </Text>
             <mesh
                 geometry={boxGeometry}
                 material={floor1Material}
@@ -214,9 +236,10 @@ const Bounds = ({length = 1}: { length?: number }) => {
 interface LevelProps {
     count?: number
     types?: ComponentType<{ position?: [number, number, number] }>[]
+    seed?: number
 }
 
-export const Level = ({count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo]}: LevelProps) => {
+export const Level = ({count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo], seed = 0}: LevelProps) => {
     const blocks = useMemo(() => {
             const blocks = []
             for (let i = 0; i < count; i++) {
@@ -225,7 +248,7 @@ export const Level = ({count = 5, types = [BlockSpinner, BlockAxe, BlockLimbo]}:
             }
             return blocks
         },
-        [count, types])
+        [count, types, seed])
     return (
         <>
             <BlockStart position={[0, 0, 0]}/>
