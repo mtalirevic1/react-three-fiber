@@ -54,13 +54,6 @@ const Player = () => {
             },
         )
 
-        const unsubscribeJumpTouch = useGame.subscribe(
-            (state) => state.jumpTouch,
-            (value) => {
-                if(value) jump()
-            }
-        )
-
         const unsubscribeAny = subscribeKeys(
             () => {
                 start()
@@ -71,7 +64,6 @@ const Player = () => {
             unsubscribeJump()
             unsubscribeAny()
             unsubscribeReset()
-            unsubscribeJumpTouch()
         }
 
     }, [jump, reset, start, subscribeKeys]);
@@ -79,29 +71,28 @@ const Player = () => {
     useFrame((state, delta) => {
         //controls
         const {forward, backward, leftward, rightward} = getKeys()
-        const {forwardTouch, backwardTouch, leftwardTouch, rightwardTouch} = useGame.getState()
         const impulse = {x: 0, y: 0, z: 0}
         const torque = {x: 0, y: 0, z: 0}
 
         const impulseStrength = 0.6 * delta
         const torqueStrength = 0.2 * delta
 
-        if (forward || forwardTouch) {
+        if (forward) {
             impulse.z -= impulseStrength
             torque.x -= torqueStrength
         }
 
-        if (rightward || rightwardTouch) {
+        if (rightward) {
             impulse.x += impulseStrength
             torque.z -= torqueStrength
         }
 
-        if (backward || backwardTouch) {
+        if (backward) {
             impulse.z += impulseStrength
             torque.x += torqueStrength
         }
 
-        if (leftward || leftwardTouch) {
+        if (leftward) {
             impulse.x -= impulseStrength
             torque.z += torqueStrength
         }

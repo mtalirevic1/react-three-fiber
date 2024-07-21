@@ -15,18 +15,6 @@ const Interface = () => {
     const rightward = useKeyboardControls((state) => state.rightward)
     const jump = useKeyboardControls((state) => state.jump)
 
-    const forwardTouch = useGame(state => state.forwardTouch)
-    const backwardTouch = useGame(state => state.backwardTouch)
-    const leftwardTouch = useGame(state => state.leftwardTouch)
-    const rightwardTouch = useGame(state => state.rightwardTouch)
-    const jumpTouch = useGame(state => state.jumpTouch)
-
-    const setForwardTouch = useGame(state => state.setForwardTouch)
-    const setBackwardTouch = useGame(state => state.setBackwardTouch)
-    const setLeftwardTouch = useGame(state => state.setLeftwardTouch)
-    const setRightwardTouch = useGame(state => state.setRightwardTouch)
-    const setJumpTouch = useGame(state => state.setJumpTouch)
-
     useEffect(() => {
         const unsubscribeEffect = addEffect(() => {
             const state = useGame.getState()
@@ -60,40 +48,15 @@ const Interface = () => {
             }
             <div className="controls">
                 <div className="raw">
-                    <div
-                        onTouchStart={() => setForwardTouch(true)}
-                        onTouchEnd={() => setForwardTouch(false)}
-                        onContextMenu={(e) => e.preventDefault()}
-                        className={`key ${forward || forwardTouch ? 'active' : ''}`}
-                    ></div>
+                    <div className={`key ${forward ? 'active' : ''}`}></div>
                 </div>
                 <div className="raw">
-                    <div
-                        onTouchStart={() => setLeftwardTouch(true)}
-                        onTouchEnd={() => setLeftwardTouch(false)}
-                        onContextMenu={(e) => e.preventDefault()}
-                        className={`key ${leftward || leftwardTouch ? 'active' : ''}`}
-                    ></div>
-                    <div
-                        onTouchStart={() => setBackwardTouch(true)}
-                        onTouchEnd={() => setBackwardTouch(false)}
-                        onContextMenu={(e) => e.preventDefault()}
-                        className={`key ${backward || backwardTouch ? 'active' : ''}`}
-                    ></div>
-                    <div
-                        onTouchStart={() => setRightwardTouch(true)}
-                        onTouchEnd={() => setRightwardTouch(false)}
-                        onContextMenu={(e) => e.preventDefault()}
-                        className={`key ${rightward || rightwardTouch ? 'active' : ''}`}
-                    ></div>
+                    <div className={`key ${leftward ? 'active' : ''}`}></div>
+                    <div className={`key ${backward ? 'active' : ''}`}></div>
+                    <div className={`key ${rightward ? 'active' : ''}`}></div>
                 </div>
                 <div className="raw">
-                    <div
-                        onTouchStart={() => setJumpTouch(true)}
-                        onTouchEnd={() => setJumpTouch(false)}
-                        onContextMenu={(e) => e.preventDefault()}
-                        className={`key ${jump || jumpTouch ? 'active' : ''} large`}
-                    ></div>
+                    <div className={`key ${jump ? 'active' : ''} large`}></div>
                 </div>
             </div>
 
